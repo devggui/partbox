@@ -1,48 +1,59 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { ParticipantData } from "../Table/Table";
-import axios from "axios";
+import { ParticipantData } from "@/app/page";
 
-export default function Chart() {
-  const [participants, setParticipants] = useState<ParticipantData[]>([])            
+export default function Chart() {  
+  ChartJS.register(ArcElement, Tooltip, Legend);      
 
-  const getData = async () => {
-    const response = await axios.get('/data.json')            
-    
-    setParticipants(response.data)
-  }      
+  function label() {
+    // return participants.map(participant => `${participant.firstName} ${participant.lastName}`)        
+    return ['Joao', 'Carlos']
+  }  
 
-  useEffect(() => {
-    getData()
-  }, [])
+  function participation() {
+    // return participants.map(participant => participant.participation)
+    return [10, 20]
+  }
 
-  ChartJS.register(ArcElement, Tooltip, Legend, Title);    
+  function backgrounds() {
+    return [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 206, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(153, 102, 255)',
+      'rgb(255, 159, 64)',
+    ]
+  }
 
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    legend: {
-      position: 'right'
-    },
+    labels: label(),    
     datasets: [
       {
         label: 'Participation',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 206, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(153, 102, 255)',
-          'rgb(255, 159, 64)',
-        ],
+        data: participation(),
+        backgroundColor: backgrounds(),
         borderColor: ['white'],
-        borderWidth: 3,        
+        borderWidth: 3               
       },
     ],
-  }
+  }    
 
-  return <Doughnut data={data} className="max-h-80" />;
+  const options = {
+		responsive: true,
+		plugins: {
+			legend: {
+        display: true,
+        position: "right" as const,
+        labels: {
+          boxWidth: 30,
+          boxHeight: 30,         
+        }
+      }	
+		},
+	}
+
+  return <Doughnut data={data} options={options} className="max-h-96 max-w-sm mx-32" />;
 }

@@ -1,0 +1,17 @@
+[
+  {
+    "firstName": "João",
+    "lastName": "Silva",
+    "participation": 25
+  },
+  {
+    "firstName": "Maria",
+    "lastName": "Santos",
+    "participation": 45
+  },
+  {
+    "firstName": "Pedro",
+    "lastName": "Ferreira",
+    "participation": 30
+  }
+]

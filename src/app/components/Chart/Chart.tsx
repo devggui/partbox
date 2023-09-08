@@ -1,20 +1,20 @@
-'use client'
-
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { ParticipantData } from "@/app/page";
 
-export default function Chart() {  
+interface ChartProps {
+  participants: ParticipantData[]
+}
+
+export default function Chart({ participants }: ChartProps) {  
   ChartJS.register(ArcElement, Tooltip, Legend);      
 
   function label() {
-    // return participants.map(participant => `${participant.firstName} ${participant.lastName}`)        
-    return ['Joao', 'Carlos']
+    return participants.map(participant => `${participant.firstName} ${participant.lastName}`)            
   }  
 
   function participation() {
-    // return participants.map(participant => participant.participation)
-    return [10, 20]
+    return participants.map(participant => participant.participation)    
   }
 
   function backgrounds() {
